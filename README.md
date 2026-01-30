@@ -6,7 +6,7 @@
 
 - [How to run](#how-to-run)
 - [Requirements](#requirements)
-- [Tests] (#Tests)
+- [Tests](#Tests)
 
 ## How to Run
 
