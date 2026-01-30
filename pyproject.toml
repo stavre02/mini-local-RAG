@@ -17,6 +17,7 @@ dependencies = [
   "pydantic==2.12.5",
   "scikit-learn==1.8.0",
   "langchain-community==0.4.1",
+  "chromadb==1.4.1",
 ]
 
 [project.urls]
@@ -31,12 +32,13 @@ python = "3.12"
 [tool.hatch.envs.default.scripts]
 main = "python ./src/mini_local_rag/cli.py {args}"
 
+
 [tool.hatch.envs.test]
+python = "3.12" 
 dependencies = [
     "pytest==9.0.2",  
     "pytest-cov==7.0.0"
 ]
-
 
 [tool.hatch.envs.types]
 extra-dependencies = [
