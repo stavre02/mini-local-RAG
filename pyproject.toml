@@ -1,0 +1,65 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mini-local-rag"
+dynamic = ["version"]
+readme = "README.md"
+requires-python = "==3.12"
+
+authors = [
+  { name = "stavre02"},
+]
+
+dependencies = [
+  "rich==14.3.1"
+]
+
+[project.urls]
+Documentation = "https://github.com/stavre02/mini-local-rag#readme"
+
+[tool.hatch.version]
+path = "src/mini_local_rag/__about__.py"
+
+[tool.hatch.envs.default]
+python = "3.12" 
+
+[tool.hatch.envs.default.scripts]
+main = "python ./src/mini_local_rag/cli.py {args}"
+
+[tool.hatch.envs.test]
+dependencies = [
+    "pytest==9.0.2",  
+    "pytest-cov==7.0.0"
+]
+
+[tool.hatch.envs.test.scripts]
+execute = "pytest" 
+
+[tool.hatch.envs.types]
+extra-dependencies = [
+  "mypy>=1.0.0",
+]
+
+[tool.hatch.envs.types.scripts]
+check = "mypy --install-types --non-interactive {args:src/mini_local_rag tests}"
+
+[tool.coverage.run]
+source_pkgs = ["mini_local_rag", "tests"]
+branch = true
+parallel = true
+omit = [
+  "src/mini_local_rag/__about__.py",
+]
+
+[tool.coverage.paths]
+mini_local_rag = ["src/mini_local_rag", "*/mini-local-rag/src/mini_local_rag"]
+tests = ["tests", "*/mini-local-rag/tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
