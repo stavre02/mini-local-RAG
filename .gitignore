@@ -1,0 +1,5 @@
+# Ignore coverage data
+.coverage
+
+# Ignore Python bytecode files
+__pycache__/

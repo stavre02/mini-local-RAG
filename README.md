@@ -1,5 +1,7 @@
 # Mini local RAG
 
+---
+
 ## Table of Contents
 
 - [How to run](#how-to-run)

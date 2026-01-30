@@ -6,7 +6,6 @@ build-backend = "hatchling.build"
 name = "mini-local-rag"
 dynamic = ["version"]
 readme = "README.md"
-requires-python = "==3.12"
 
 authors = [
   { name = "stavre02"},
@@ -34,8 +33,6 @@ dependencies = [
     "pytest-cov==7.0.0"
 ]
 
-[tool.hatch.envs.test.scripts]
-execute = "pytest" 
 
 [tool.hatch.envs.types]
 extra-dependencies = [
