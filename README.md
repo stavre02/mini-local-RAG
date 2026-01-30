@@ -6,6 +6,7 @@
 
 - [How to run](#how-to-run)
 - [Requirements](#requirements)
+- [Tests] (#Tests)
 
 ## How to Run
 
@@ -39,6 +40,20 @@ hatch run main ingest "[full_path]"
 
 ```console
 hatch run main -h
+```
+
+## Tests
+
+##### unit tests
+
+```console
+hatch test --python 3.12
+```
+
+##### coverage
+
+```console
+hatch test --python 3.12 --cover
 ```
 
 ## Requirements
