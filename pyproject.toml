@@ -13,7 +13,10 @@ authors = [
 
 dependencies = [
   "rich==14.3.1",
-  "ollama==0.6.1"
+  "ollama==0.6.1",
+  "pydantic==2.12.5",
+  "scikit-learn==1.8.0",
+  "langchain-community==0.4.1",
 ]
 
 [project.urls]
