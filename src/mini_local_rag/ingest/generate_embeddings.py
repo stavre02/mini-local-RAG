@@ -1,8 +1,7 @@
 from typing import Any, Dict
 from langchain_core.documents import Document
 
-from mini_local_rag.config import Config
-from mini_local_rag.embedder import Embedder, Qwen3Embedder
+from mini_local_rag.embedder import Embedder
 from mini_local_rag.pipeline import Step
 
 
