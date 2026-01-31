@@ -157,6 +157,47 @@ Examples
 
 ```
 
+#### Example using data from image
+
+Last page of the file _E10 Document 3.pdf_ is a figure and parsed as image.
+
+```console
+PS C:\mini-local-rag> hatch run main ask "how can i add someone on a control group when the proven effective treatment is life saving?"
+Planning answer Status: Draft response ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100%
+                                                                                                                                  Response
+
+Based on the reports provided context and information about adding someone to a control group, it appears that there are two approaches that could work:
+
+ 1 External Control Group: In this approach, you would select a well-documented population of patients as the control group that has not received the proven effective treatment. This ensures that any observed differences in outcomes between the treated and untreated
+   groups can be attributed to the intervention rather than the underlying condition.
+ 2 Historical Control: Another option is to use an historical control, which refers to a group of patients who have been observed at an earlier time (e.g., before the treatment was introduced) but have not received the proven effective treatment.
+
+Both approaches offer advantages:
+
+ • External Control Group: Reduces the risk of bias and ensures that any differences in outcomes between groups are due to the intervention.
+ • Historical Control: Provides a more robust estimate of the effect size, as it is based on data from an earlier time point.
+
+Here's an example markdown string that can be used to answer this question:
+
+"In general, selecting an external control group with patients who have not received the proven effective treatment would be a suitable approach. This ensures that any observed differences in outcomes between groups are due to the intervention rather than the
+underlying condition."
+
+Or, using the historical control option:
+
+"The use of an historical control could also be considered, where the control group consists of patients who have been observed at an earlier time point (e.g., before the treatment was introduced)."
+
+
+ Document                                                                       Section
+ ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ C:\Users\User\Documents\E10 - Document 3.pdf  Figure 1: Choosing the Concurrent Control for Demonstrating Efficacy
+ C:\Users\User\Documents\E10 - Document 3.pdf  b. Other Modifications of Study Design (2.1.5.2)
+ C:\Users\User\Documents\E10 - Document 3.pdf  1. Description (2.5.1)
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+```
+
 ## Tests
 
 ##### unit tests
