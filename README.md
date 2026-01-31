@@ -157,6 +157,40 @@ Examples
 
 ```
 
+```console
+PS C:\mini-local-rag> hatch run main "Should documents available in the TMF be included in the CSR appendices?"
+Planning answer Status: Draft response ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100%
+                                                                                                                                  Response
+
+Include Documents Available in the TMF in CSR Appendices?
+
+According to the context provided by RAG, no, documents available in the Trial Master File (TMF) should not be included in the CSR appendices.
+
+To confirm this, let's look at section 3.5 of the guidance. It states:
+
+"Documents that provide critical information on a study, such as the protocol (16.1.1), statistical methods (16.1.9), list of investigators and study sites, and sample case report forms, would always be needed by reviewers assessing a study and should be included in
+the trial report even if they are in a TMF."
+
+Therefore, documents available in the TMF should not be included in the CSR appendices.
+
+Additionally, section 3.6 provides further clarification:
+
+"The documentation necessary to review the CSR should be included in the CSR appendices. It is not sufficient for such documents to be included only in the TMF, which is not submitted in the marketing application."
+
+This reinforces that documents available in the TMF are already part of the trial report and should not need to be separately appended to the CSR.
+
+
+ Document                                                                                Section
+ ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ C:\Users\User\Documents\E3 Structure - Document 2.pdf  B. Appendices (2)
+ C:\Users\User\Documents\E3 Structure - Document 2.pdf  Contains Nonbinding Recommendations
+ C:\Users\User\Documents\E3 Structure - Document 2.pdf  Contains Nonbinding Recommendations
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+```
+
 #### Example using data from image
 
 Last page of the file _E10 Document 3.pdf_ is a figure and parsed as image.
