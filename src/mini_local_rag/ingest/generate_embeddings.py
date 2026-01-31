@@ -42,4 +42,4 @@ class GenerateEmbeddingsStep(Step):
         """
         documents: list[Document] = context["documents"]
         for doc in documents:
-            doc.metadata["embeddings"] = self._embedder.embed(doc.page_content)
+            doc.metadata["embeddings"] = self.embedder.embed(doc.page_content)
