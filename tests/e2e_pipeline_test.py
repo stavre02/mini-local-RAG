@@ -2,7 +2,10 @@ import os
 from pathlib import Path
 import shutil
 from mini_local_rag.config import Config
+from mini_local_rag.logger.log_record import LogRecord
 from mini_local_rag.pipeline_builder import PipelineBuilder
+from rich.markdown import Markdown
+
 import pytest
 
 
@@ -27,3 +30,23 @@ def test_pipelines_e2e(pipelineBuilder:PipelineBuilder):
     assert len(docs)==1 , "Expected 1 document to be ingested"
 
     assert docs[0] == full_path , f"Expected document ${full_path} was not ingested"
+
+
+    pipeline = pipelineBuilder.get_ask_pipeline("what are ICH guidances?")
+
+    pipeline.execute()
+
+    context = pipeline.context
+
+    log_record:LogRecord = context["log_record"]
+
+    assert len(log_record.errors)==0 , f"There where erros while asking a question : {log_record.errors}" 
+
+    documents=context["documents"]
+
+    assert len(documents)>0 , "Expected to find documents"
+
+
+    output: Markdown =context['output']
+
+    assert len(output.markup)>0 , "Expected to find output"

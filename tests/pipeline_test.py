@@ -1,4 +1,5 @@
 from typing import Any, Dict
+from mini_local_rag.logger.structured_logger import StructuredLogger
 import pytest
 from unittest.mock import MagicMock
 from mini_local_rag.pipeline import Pipeline,Step 
@@ -24,9 +25,9 @@ def pipeline():
 
     # Create mock steps
     steps = [MockStep("Step 1"), MockStep("Step 2"), MockStep("Step 3")]
-
+    config =Config()
     # Create the pipeline instance
-    return Pipeline(label="Test Pipeline", context=context, steps=steps, config=Config())
+    return Pipeline(label="Test Pipeline", context=context, steps=steps, config=config,logger=StructuredLogger(config=config))
 
 
 def test_pipeline_initialization(pipeline):
@@ -36,8 +37,7 @@ def test_pipeline_initialization(pipeline):
     # Ensure the pipeline has the correct label, trace_id, and steps
     assert pipeline.label == "Test Pipeline"
     assert len(pipeline.steps) == 3
-    assert pipeline.context == {"executed_steps": []}
-    assert isinstance(pipeline.trace_id, str)
+    assert pipeline.context["executed_steps"] == []
 
 
 def test_pipeline_execute(pipeline):
