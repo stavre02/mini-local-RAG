@@ -96,6 +96,8 @@ class Pipeline:
         For each step, it measures the execution time and logs any errors. It also displays
         progress to the console.
 
+        At the end displays the output from context['output'] if exist
+
         Logs using StructuredLogger after completion
 
         Raises:
@@ -112,7 +114,9 @@ class Pipeline:
                     progress.update(task, description=f"{self.label} Status: {step.label}")                                    
                     start = time.time()
                     try:    
-                        step.execute(self.context)                   
+
+                        step.execute(self.context)
+
                     finally:
                         progress.update(task, advance=1)
                         diff = round((time.time() - start) , 2)
@@ -122,6 +126,13 @@ class Pipeline:
             markdown = f"## There was an issue while processing your request.\n### message\n{msg}\n#### trace id\n{self.trace_id}\n***\n"
             
             rprint(Markdown(markdown))
-            
-        log_record =getattr(self.context,"log_record",None)
-        if log_record is not None : self.logger.log(log_record)
+
+        ## check if there is an output object and we print it if its there
+        output = self.context.get("output",None)
+        if (output is not None):
+            rprint(output) 
+
+        log_record:LogRecord =self.context.get("log_record",None)
+        if log_record is not None :
+            log_record.latency = self.latency
+            self.logger.log(log_record)

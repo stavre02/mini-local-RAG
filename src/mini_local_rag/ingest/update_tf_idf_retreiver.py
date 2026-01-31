@@ -16,6 +16,7 @@ class UpdateTFIDFRetrieverStep(Step):
 
     Attributes:
         label (str): The label identifying this step ("update tf idf retriever model").
+        retriever_path (str): The directory where the retriever is located, retrieved from the `config.retriever_path`.
     """
     label="update tf idf retriever model"
     def __init__(self, config: Config) -> None:
