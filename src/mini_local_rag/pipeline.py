@@ -6,6 +6,8 @@ from rich import print as rprint
 from rich.progress import Progress,TextColumn,BarColumn, TaskProgressColumn
 
 from mini_local_rag.config import Config
+from mini_local_rag.logger.structured_logger import StructuredLogger
+from mini_local_rag.logger.log_record import LogRecord
 
 class Step(ABC):
     """
@@ -35,14 +37,17 @@ class Pipeline:
     """
     A class representing a pipeline of steps to be executed in sequence, with logging, progress tracking, and latency measurement.
 
+    The pipeline consists of a series of steps (`Step` objects) that are executed in order. Each step can modify the shared context and log its execution progress and latency. The pipeline can also capture debug logs, track execution time, and store relevant data.
+
     Attributes:
-        trace_id (str): A unique identifier for this execution instance.
+        trace_id (str): A unique identifier for this execution instance, generated during initialization.
         steps (List[Step]): A list of steps to be executed in the pipeline.
         latency (Dict[str, float]): A dictionary mapping each step's name to the time it took to execute.
         label (str): A label for identifying the pipeline instance.
         context (Dict[str, Any]): A dictionary of context variables that are shared across all steps.
         debug (bool): Flag indicating whether to enable debug logging.
         config (Config): Configuration object that holds pipeline settings.
+        logger (StructuredLogger): Logger used for structured logging during the pipeline's execution.
     """
     trace_id: str
     steps: list[Step]
@@ -51,20 +56,25 @@ class Pipeline:
     context: Dict[str, Any]
     debug: bool
     config: Config
-    def __init__(self,label: str,config:Config,context:Dict[str, Any],steps:list[Step]):
+    logger:StructuredLogger
+    def __init__(self,label: str,config:Config,context:Dict[str, Any],steps:list[Step],logger:StructuredLogger):
         """
         Initializes a new Pipeline instance.
+
+        The constructor sets up the pipeline's basic attributes such as trace ID, label, context, steps, and logger. It also initializes a log record to track the execution details of the pipeline.
 
         Args:
             label (str): A label identifying the pipeline.
             config (Config): A configuration object containing pipeline-specific settings.
-            context (Dict[str, Any]): A dictionary of context data shared across steps.
-            steps (List[Step]): A list of steps to be executed in the pipeline.
-            debug (bool): Flag indicating whether to enable debug logging.
+            context (Dict[str, Any]): A dictionary of context data shared across steps. This context is updated as the pipeline progresses.
+            steps (List[Step]): A list of steps (`Step` objects) that will be executed in the pipeline. Each step performs an individual task.
+            logger (StructuredLogger): The logger used for structured logging of the pipeline execution.
 
         Attributes:
-            trace_id (str): A unique identifier for this pipeline execution, generated during initialization.
-            latency (Dict[str, float]): A dictionary that will hold the time durations for each step after execution.
+            trace_id (str): A unique identifier for this pipeline execution, generated during initialization using `uuid`.
+            latency (Dict[str, float]): A dictionary that holds the time durations for each step after execution.
+            logger (StructuredLogger): The logger used for recording structured logs during the pipeline run.
+            log_record (LogRecord): A log record that tracks the pipeline execution details, including the steps, inputs, and trace ID.
         """
         self.trace_id = str(uuid.uuid4())
         self.label = label
@@ -72,6 +82,11 @@ class Pipeline:
         self.steps= steps
         self.latency={}
         self.config=config
+        self.logger=logger
+        log_record=LogRecord.create(trace_id=self.trace_id,plan=[f"{step.label}({step.__class__.__name__})" for step in steps])
+        log_record.inputs = context.copy()
+        context["log_record"]=log_record
+
     def execute(self) -> None:
         """
         Executes the pipeline steps sequentially, tracking progress and logging the results.
@@ -80,6 +95,8 @@ class Pipeline:
         For each step, it measures the execution time and logs any errors. It also displays
         progress to the console.
 
+        Logs using StructuredLogger after completion
+        
         Raises:
             Exception: If an error occurs during execution, it logs the error and stops the pipeline
         """
@@ -101,4 +118,6 @@ class Pipeline:
                         self.latency [f"{idx}-{step.label}({step.__class__.__name__})"] = diff
         except Exception as e:    
             rprint(f"There was an issue while processing the request trace_id: {self.trace_id}")
-
+            
+        log_record =getattr(self.context,"log_record",LogRecord())
+        self.logger.log(log_record)

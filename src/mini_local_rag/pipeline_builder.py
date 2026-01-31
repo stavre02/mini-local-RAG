@@ -7,6 +7,7 @@ from mini_local_rag.ingest.pdf_parse import PdfParseStep
 from mini_local_rag.ingest.persist_changes import PersistChangesStep
 from mini_local_rag.ingest.replace_images import ImageReplaceStep
 from mini_local_rag.ingest.update_tf_idf_retreiver import UpdateTFIDFRetrieverStep
+from mini_local_rag.logger.structured_logger import StructuredLogger
 from mini_local_rag.pipeline import Pipeline, Step
 from mini_local_rag.vector_store import VectorStore
 
@@ -15,6 +16,7 @@ class PipelineBuilder:
     def __init__(self,config:Config):
         self.config=config
         self.vector_store=VectorStore(config=config)
+        self.logger = StructuredLogger(config=config)
         self.ingestion_steps =[
                     PdfParseStep(),
                     ImageReplaceStep(config=config),
@@ -26,4 +28,4 @@ class PipelineBuilder:
                 ]
     def get_ingestion_pipeline(self,file_path:str) -> Pipeline:
 
-        return Pipeline(label=f"Ingesting file: {file_path}",context={"file_path":file_path},steps=self.ingestion_steps,config=self.config)
+        return Pipeline(label=f"Ingesting file: {file_path}",context={"file_path":file_path},steps=self.ingestion_steps,config=self.config,logger=self.logger)
