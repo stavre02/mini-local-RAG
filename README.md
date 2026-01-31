@@ -86,3 +86,31 @@ graph TD;
 
 **Build a local mini RAG/Agentic Q&A over a small provided corpus (3 provided PDF files).**
 **Use Ollama with an offline embedding model**
+
+#### logs
+
+logs must have a format like:
+
+```json
+{
+  "trace_id": "uuid",
+  "question": "...",
+  "plan": ["Parsing Pdf file", "Replacing images", "...", "..."],
+  "retrieval": [
+    {
+      "file": "a.txt",
+      "chunk_id": 42,
+      "score": 0.75
+    }
+  ],
+  "latency": {
+    "Parsing Pdf file": 39.73,
+    "Replacing images": 233.68,
+    "...": 0.1,
+    "...": 0.0
+  },
+  "errors": []
+}
+```
+
+and have 1 log per request
