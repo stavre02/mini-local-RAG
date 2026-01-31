@@ -20,7 +20,8 @@ class Config:
     chunk_overlap=100
     retriever_path=".data/tf-idf-retriever"
     chromadb_path=".data/chroma_db"
-    logs_folder =".data"
+    data_folder =".data"
+    enable_local_models = False
     def __init__(self,**kwargs):
         for (key,value) in kwargs.items():
             if hasattr(self,key):

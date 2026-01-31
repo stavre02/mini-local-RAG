@@ -15,13 +15,19 @@ class PdfParseStep(Step):
         _converter (DocumentConverter): The converter responsible for parsing PDFs with options for OCR, table structure, and image generation.
     """
     label="Parsing Pdf file"
-    def __init__(self,num_threads=4):
+    models_folder ="models"
+    def __init__(self,config:Config,num_threads=4):
         """
         Initializes the PdfParseStep with options for parsing PDFs, performing OCR, and other related tasks.
 
         Args:
             num_threads (int): The number of threads to use for acceleration during PDF processing (default is 4).
+            config (Config): The configuration for the pipeline containing parameters for the models.
         """
+        path = None
+        if (config.enable_local_models):
+            cwd = os.getcwd()
+            path = os.path.join(cwd, config.data_folder,self.models_folder)
 
         pipeline_options = PdfPipelineOptions(
             do_ocr=True,
@@ -29,6 +35,7 @@ class PdfParseStep(Step):
             generate_picture_images=True,
             generate_page_images=True,
             do_formula_enrichment=True,
+            artifacts_path= path,
             table_structure_options={"do_cell_matching": True},
             ocr_options=EasyOcrOptions(),
             accelerator_options=AcceleratorOptions(num_threads, device=AcceleratorDevice.CPU),

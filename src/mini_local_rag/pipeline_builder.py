@@ -18,7 +18,7 @@ class PipelineBuilder:
         self.vector_store=VectorStore(config=config)
         self.logger = StructuredLogger(config=config)
         self.ingestion_steps =[
-                    PdfParseStep(),
+                    PdfParseStep(config=config),
                     ImageReplaceStep(config=config),
                     MarkdownConvertStep(),
                     MarkdownChunkingStep(config=config),
