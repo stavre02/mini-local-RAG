@@ -5,8 +5,8 @@
 ## Table of Contents
 
 - [How to run](#how-to-run)
-- [Requirements](#requirements)
 - [Tests](#Tests)
+- [Requirements](#requirements)
 
 ## How to Run
 
