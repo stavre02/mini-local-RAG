@@ -13,7 +13,7 @@ from mini_local_rag.ingest.persist_changes import PersistChangesStep
 from mini_local_rag.ingest.replace_images import ImageReplaceStep
 from mini_local_rag.ingest.update_tf_idf_retreiver import UpdateTFIDFRetrieverStep
 from mini_local_rag.logger.structured_logger import StructuredLogger
-from mini_local_rag.pipeline import Pipeline, Step
+from mini_local_rag.pipeline import Pipeline
 from mini_local_rag.vector_store import VectorStore
 
 
@@ -32,17 +32,18 @@ class PipelineBuilder:
                     PersistChangesStep(vector_store=self.vector_store),
                     UpdateTFIDFRetrieverStep(config=config)
                 ]
-        
-    def get_ingestion_pipeline(self,file_path:str) -> Pipeline:
-
-        return Pipeline(label=f"Ingesting file: {file_path}",context={"file_path":file_path},steps=self.ingestion_steps,config=self.config,logger=self.logger)
-    
-    def get_ask_pipeline(self,question:str)-> Pipeline:
-        steps = [
+        self.ask_steps = [
             GenerateQuestionEmbeddingsStep(embedder=self.embedder),
             RetrieveFromVectorStoreStep(vector_store=self.vector_store),
             InvokeTFIDFRetrieverStep(config=self.config),
             AppendRetrievalLogsStep(),
             DraftResponseStep(config=self.config)
         ]
-        return Pipeline(label="Planning answer",context={"question":question},steps=steps,config=self.config,logger=self.logger)
+        
+    def get_ingestion_pipeline(self,file_path:str) -> Pipeline:
+
+        return Pipeline(label=f"Ingesting file: {file_path}",context={"file_path":file_path},steps=self.ingestion_steps,config=self.config,logger=self.logger)
+    
+    def get_ask_pipeline(self,question:str)-> Pipeline:
+        
+        return Pipeline(label="Planning answer",context={"question":question},steps=self.ask_steps,config=self.config,logger=self.logger)
