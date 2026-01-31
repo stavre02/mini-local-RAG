@@ -72,15 +72,24 @@ hatch test --python 3.12 --cover
 
 ```mermaid
 graph TD;
-    A[Parse pdf]-->B[Replace image with text];
-    B-->C[Convert to markdown];
-    C-->D[Create chunks];
-    D-->E[Generate embeddings];
-    E --> F[Persist vector db];
-    F --> G[Update tf-idf retriever];
+    A[file path]-->B[Parse pdf];
+    B-->C[Replace image with text];
+    C-->D[Convert to markdown];
+    D-->E[Create chunks];
+    E-->F[Generate embeddings];
+    F -->G[Persist vector db];
+    G --> H[Update tf-idf retriever];
 ```
 
 #### Question flow
+
+```mermaid
+graph TD;
+    A[Question]-->B[Generate embeddings];
+    B-->C[Query vector store];
+    C-->D[Execute Tf idf fallback];
+    D-->E[Create response object];
+```
 
 ## Requirements
 
