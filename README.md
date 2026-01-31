@@ -20,6 +20,8 @@
 To run the tests, you must have a running localhost ollama instance with these models pulled
 
 - gemma3:4b
+- llama3.2:1b
+- qwen3-embedding:4b
 
 ### Using hatch
 
