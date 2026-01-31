@@ -30,7 +30,7 @@ class StructuredLogger:
 
         # File handler (appends to file)
         cwd = os.getcwd()
-        log_dir = os.path.join(cwd, config.show_logs)
+        log_dir = os.path.join(cwd, config.logs_folder)
         log_file_path = os.path.join(log_dir, self.__log_file)
         os.makedirs(log_dir, exist_ok=True)
         file_handler = logging.FileHandler(log_file_path)

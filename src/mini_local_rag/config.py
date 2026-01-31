@@ -1,6 +1,7 @@
 class Config:
     show_logs:bool = False,
     vision_model='gemma3:4b'
+    answer_model ='llama3.2:1b'
     image_to_text_prompt="""
     You are a question rephrasing system.
     Describe this image as if you are the author of a report.
@@ -13,11 +14,13 @@ class Config:
             ("#", "Header 1"),
             ("##", "Header 2"),
         ]
+
     ## chunk size is 2056 but leave it 2000 just in case
     chunk_size=2000
     chunk_overlap=100
     retriever_path=".data/tf-idf-retriever"
     chromadb_path=".data/chroma_db"
+    logs_folder =".data"
     def __init__(self,**kwargs):
         for (key,value) in kwargs.items():
             if hasattr(self,key):

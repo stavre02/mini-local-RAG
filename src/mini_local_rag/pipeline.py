@@ -4,6 +4,7 @@ from typing import Any, Dict
 import uuid
 from rich import print as rprint
 from rich.progress import Progress,TextColumn,BarColumn, TaskProgressColumn
+from rich.markdown import Markdown
 
 from mini_local_rag.config import Config
 from mini_local_rag.logger.structured_logger import StructuredLogger
@@ -96,7 +97,7 @@ class Pipeline:
         progress to the console.
 
         Logs using StructuredLogger after completion
-        
+
         Raises:
             Exception: If an error occurs during execution, it logs the error and stops the pipeline
         """
@@ -116,8 +117,11 @@ class Pipeline:
                         progress.update(task, advance=1)
                         diff = round((time.time() - start) , 2)
                         self.latency [f"{idx}-{step.label}({step.__class__.__name__})"] = diff
-        except Exception as e:    
-            rprint(f"There was an issue while processing the request trace_id: {self.trace_id}")
+        except Exception as e: 
+            msg= str(e)
+            markdown = f"## There was an issue while processing your request.\n### message\n{msg}\n#### trace id\n{self.trace_id}\n***\n"
             
-        log_record =getattr(self.context,"log_record",LogRecord())
-        self.logger.log(log_record)
+            rprint(Markdown(markdown))
+            
+        log_record =getattr(self.context,"log_record",None)
+        if log_record is not None : self.logger.log(log_record)
