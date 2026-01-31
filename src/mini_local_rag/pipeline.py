@@ -122,11 +122,14 @@ class Pipeline:
                         diff = round((time.time() - start) , 2)
                         self.latency [f"{idx}-{step.label}({step.__class__.__name__})"] = diff
         except Exception as e: 
+            log_record:LogRecord =self.context.get("log_record",None)
+            if log_record is not None :
+                log_record.add_error(e=e)
             msg= str(e)
             markdown = f"## There was an issue while processing your request.\n### message\n{msg}\n#### trace id\n{self.trace_id}\n***\n"
             
             rprint(Markdown(markdown))
-
+            
         ## check if there is an output object and we print it if its there
         output = self.context.get("output",None)
         if (output is not None):
