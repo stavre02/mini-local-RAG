@@ -12,8 +12,6 @@ class MarkdownChunkingStep(Step):
 
     Attributes:
         label (str): The label identifying this step ("Splitting Markdown into chunks").
-        markdown_splitter (MarkdownHeaderTextSplitter): The splitter used to break the Markdown text based on headers.
-        text_splitter (RecursiveCharacterTextSplitter): The splitter used to break the text into smaller chunks of a specified size.
     """
     label = "Splitting Markdown into chunks"
 
