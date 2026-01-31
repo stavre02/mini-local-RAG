@@ -2,23 +2,32 @@ from typing import Any, Dict
 from langchain_core.documents import Document
 
 from mini_local_rag.config import Config
-from mini_local_rag.embedder import Qwen3Embedder
+from mini_local_rag.embedder import Embedder, Qwen3Embedder
 from mini_local_rag.pipeline import Step
 
 
 class GenerateEmbeddingsStep(Step):
     label = "Embedding generation"
-    _embedder = Qwen3Embedder()
     """
     A pipeline step that generates embeddings for documents using a specified embedder model.
 
-    This step uses an embedder to create embeddings for each document in the pipeline, 
-    and stores the generated embeddings in the document's metadata.
+    This step uses an embedder (such as `Qwen3Embedder`) to create embeddings for the provided question 
+    and stores the resulting embedding in the context. The embedder is passed as an argument during 
+    the initialization of the step.
 
     Attributes:
         label (str): The label identifying this step ("Embedding generation").
-        _embedder (Qwen3Embedder): The embedder instance used to generate embeddings for the document content.
+        embedder (Embedder): The embedder instance used to generate embeddings for the question. 
+                              The embedder model is passed during initialization.
     """
+    def __init__(self,embedder:Embedder):
+        """
+        Initializes the step with the provided embedder.
+
+        Args:
+            embedder (Embedder): The embedder instance used to generate embeddings for the question.
+        """
+        self.embedder = embedder
     def execute(self, context: Dict[str, Any]) -> None:
         """
         Generates embeddings for each document in the context and stores them in the document's metadata.
