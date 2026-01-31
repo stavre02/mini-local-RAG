@@ -5,6 +5,8 @@ import uuid
 from rich import print as rprint
 from rich.progress import Progress,TextColumn,BarColumn, TaskProgressColumn
 
+from mini_local_rag.config import Config
+
 class Step(ABC):
     """
     The basic step for a pipeline
@@ -26,13 +28,16 @@ class Step(ABC):
 
 class Pipeline:
     """
-    A class representing a pipeline of steps to be executed in sequence, with logging and progress tracking.
+    A class representing a pipeline of steps to be executed in sequence, with logging, progress tracking, and latency measurement.
 
     Attributes:
         trace_id (str): A unique identifier for this execution instance.
         steps (List[Step]): A list of steps to be executed in the pipeline.
+        latency (Dict[str, float]): A dictionary mapping each step's name to the time it took to execute.
         label (str): A label for identifying the pipeline instance.
         context (Dict[str, Any]): A dictionary of context variables that are shared across all steps.
+        debug (bool): Flag indicating whether to enable debug logging.
+        config (Config): Configuration object that holds pipeline settings.
     """
     trace_id: str
     steps: list[Step]
@@ -40,28 +45,28 @@ class Pipeline:
     label: str
     context: Dict[str, Any]
     debug: bool
-
-    def __init__(self,label: str,context:Dict[str, Any],steps:list[Step],debug:bool):
+    config: Config
+    def __init__(self,label: str,config:Config,context:Dict[str, Any],steps:list[Step]):
         """
         Initializes a new Pipeline instance.
 
         Args:
             label (str): A label identifying the pipeline.
+            config (Config): A configuration object containing pipeline-specific settings.
             context (Dict[str, Any]): A dictionary of context data shared across steps.
             steps (List[Step]): A list of steps to be executed in the pipeline.
             debug (bool): Flag indicating whether to enable debug logging.
 
         Attributes:
-            trace_id (str): A unique identifier for this pipeline execution.
-            durations (List[float]): A list of time durations for each step in the pipeline.
+            trace_id (str): A unique identifier for this pipeline execution, generated during initialization.
+            latency (Dict[str, float]): A dictionary that will hold the time durations for each step after execution.
         """
         self.trace_id = str(uuid.uuid4())
         self.label = label
         self.context = context
-        self.debug = debug
         self.steps= steps
         self.latency={}
-
+        self.config=config
     def execute(self) -> None:
         """
         Executes the pipeline steps sequentially, tracking progress and logging the results.

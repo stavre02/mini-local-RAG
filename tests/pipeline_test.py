@@ -2,6 +2,7 @@ from typing import Any, Dict
 import pytest
 from unittest.mock import MagicMock
 from mini_local_rag.pipeline import Pipeline,Step 
+from mini_local_rag.config import Config
 
 # Mocking the Step class since it's abstract and doesn't have an implementation
 class MockStep(Step):
@@ -25,7 +26,7 @@ def pipeline():
     steps = [MockStep("Step 1"), MockStep("Step 2"), MockStep("Step 3")]
 
     # Create the pipeline instance
-    return Pipeline(label="Test Pipeline", context=context, steps=steps, debug=False)
+    return Pipeline(label="Test Pipeline", context=context, steps=steps, config=Config())
 
 
 def test_pipeline_initialization(pipeline):
