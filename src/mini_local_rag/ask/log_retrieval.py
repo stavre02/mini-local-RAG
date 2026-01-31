@@ -16,6 +16,6 @@ class AppendRetrievalLogsStep(Step):
                     record.retrieval.append({
                     "file":doc.metadata["file_path"],
                     "id":doc.metadata["id"],
-                    "score":getattr(doc.metadata,"score",None)
+                    "score":doc.metadata.get("score",None)
             })
                 
