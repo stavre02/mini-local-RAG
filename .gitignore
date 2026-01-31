@@ -1,5 +1,6 @@
 # Ignore coverage data
-.coverage
+.coverage*
+
 
 # Ignore Python bytecode files
 __pycache__/
@@ -7,3 +8,6 @@ __pycache__/
 
 # Ignore data folder for now
 .data/
+
+# Ignore test data folder
+.test/

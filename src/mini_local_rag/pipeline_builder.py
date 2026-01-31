@@ -1,0 +1,29 @@
+import os
+from mini_local_rag.config import Config
+from mini_local_rag.ingest.chunk_markdown import MarkdownChunkingStep
+from mini_local_rag.ingest.convert_markdown import MarkdownConvertStep
+from mini_local_rag.ingest.generate_embeddings import GenerateEmbeddingsStep
+from mini_local_rag.ingest.pdf_parse import PdfParseStep
+from mini_local_rag.ingest.persist_changes import PersistChangesStep
+from mini_local_rag.ingest.replace_images import ImageReplaceStep
+from mini_local_rag.ingest.update_tf_idf_retreiver import UpdateTFIDFRetrieverStep
+from mini_local_rag.pipeline import Pipeline, Step
+from mini_local_rag.vector_store import VectorStore
+
+
+class PipelineBuilder:
+    def __init__(self,config:Config):
+        self.config=config
+        self.vector_store=VectorStore(config=config)
+        self.ingestion_steps =[
+                    PdfParseStep(),
+                    ImageReplaceStep(config=config),
+                    MarkdownConvertStep(),
+                    MarkdownChunkingStep(config=config),
+                    GenerateEmbeddingsStep(),
+                    PersistChangesStep(vector_store=self.vector_store),
+                    UpdateTFIDFRetrieverStep(config=config)
+                ]
+    def get_ingestion_pipeline(self,file_path:str) -> Pipeline:
+
+        return Pipeline(label=f"Ingesting file: {file_path}",context={"file_path":file_path},steps=self.ingestion_steps,config=self.config)

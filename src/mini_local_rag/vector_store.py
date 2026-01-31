@@ -1,5 +1,7 @@
 import chromadb
 from langchain_core.documents import Document
+
+from mini_local_rag.config import Config
      
 
 class VectorStore:
@@ -24,14 +26,14 @@ class VectorStore:
 
     __collection_name: str = "embeddings_collection"  # The name of the collection in ChromaDB.
     __distance_threshold: float = 0.35  # Threshold for distance when filtering query results.
-    def __init__(self):
+    def __init__(self,config:Config):
         """
         Initializes the `VectorStore` instance by setting up the ChromaDB client and collection.
 
         Creates a ChromaDB `PersistentClient` and sets up a collection with cosine similarity
         using the HNSW (Hierarchical Navigable Small World) index for efficient vector search.
         """
-        client = chromadb.PersistentClient(path=".data/chroma_db")
+        client = chromadb.PersistentClient(path=config.chromadb_path)
         # "hnsw:space": "cosine" -> Use cosine
         self._collection = client.get_or_create_collection(name=self.__collection_name,metadata={"hnsw:space": "cosine"})
 

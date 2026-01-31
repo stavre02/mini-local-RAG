@@ -9,20 +9,25 @@ from mini_local_rag.config import Config
 
 class Step(ABC):
     """
-    The basic step for a pipeline
+    The base class for a step in a pipeline. All pipeline steps must inherit from this class and implement the `execute` method.
 
     Attributes:
         label (str): A label for identifying the step instance.
     """
     label: str
-    def __init__(self,label:str):
-        self.label=label
 
     @abstractmethod
     def execute(self, context: Dict[str, Any]) -> None:
         """
-        Pipeline step execution
-        This will be executed when pipeline reaches this step
+        Executes the step in the pipeline.
+
+        This method should be overridden by subclasses to define the specific behavior of each pipeline step.
+        
+        Args:
+            context (Dict[str, Any]): The context holding shared data for the pipeline execution.
+
+        Raises:
+            NotImplementedError: If not overridden by a subclass.
         """
         pass
 
@@ -86,8 +91,9 @@ class Pipeline:
                 task = progress.add_task(self.label, total=len(self.steps), time_remaining=None)
                 
                 for idx,step in enumerate(self.steps):
+                    progress.update(task, description=f"{self.label} Status: {step.label}")                                    
                     start = time.time()
-                    try:                                        
+                    try:    
                         step.execute(self.context)                   
                     finally:
                         progress.update(task, advance=1)
