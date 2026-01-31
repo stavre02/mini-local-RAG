@@ -50,3 +50,10 @@ def test_pipelines_e2e(pipelineBuilder:PipelineBuilder):
     output: Markdown =context['output']
 
     assert len(output.markup)>0 , "Expected to find output"
+
+
+    pipeline = pipelineBuilder.get_documents()
+    pipeline.execute()
+    output = pipeline.context.get("output",None)
+
+    assert output is not None , "Expected to have output"

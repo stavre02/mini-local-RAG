@@ -5,7 +5,7 @@ from mini_local_rag.config import Config
 from mini_local_rag.pipeline_builder import PipelineBuilder
 
 def documents_cmd(args: argparse.Namespace) -> None:
-    pass
+    PipelineBuilder(config=Config(show_logs=args.show_logs)).get_documents().execute()
 
 def ingest_cmd(args: argparse.Namespace) -> None:
     PipelineBuilder(config=Config(show_logs=args.show_logs)).get_ingestion_pipeline(file_path=args.file_path).execute()
@@ -50,6 +50,7 @@ def build_parser(interactive:bool) -> argparse.ArgumentParser:
 
     # documents command
     documents = subparsers.add_parser("documents", help="List all documents by path")
+    documents.add_argument("--show-logs", action="store_true", help="Display debug logs")
     documents.set_defaults(func=documents_cmd)
 
     # ingest command
