@@ -80,7 +80,7 @@ docker compose up -d ollama_with_images
 Wait to finish and then Run cli
 
 ```console
-docker compose up mini-local-rag
+docker compose run it mini-local-rag
 ```
 
 it will direclty open the cli in interactive mode
