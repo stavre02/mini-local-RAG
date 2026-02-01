@@ -17,7 +17,7 @@ WORKDIR /app
 COPY --from=builder /app/dist /app
 COPY ./documents /app/documents
 
-ENV OLLAMA_HOST=ollama:11434
+ENV OLLAMA_HOST=ollama_with_images:11434
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libxcb1 \

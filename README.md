@@ -65,8 +65,32 @@ hatch run main -h
 
 ### Docker
 
+Start ollama
+
 ```console
-placeholder
+docker compose up ollama_with_images
+```
+
+or detached mode
+
+```console
+docker compose up -d ollama_with_images
+```
+
+Wait to finish and then Run cli
+
+```console
+docker compose up mini-local-rag
+```
+
+it will direclty open the cli in interactive mode
+
+you still need to manually ingest the documents:
+
+```console
+ingest "/app/documents/E3 Structure - Document 2.pdf"
+ingest "/app/documents/E10 - Document 3.pdf"
+ingest "/app/documents/ICD - Document 1.pdf"
 ```
 
 ## Examples
