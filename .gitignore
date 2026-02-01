@@ -11,3 +11,7 @@ __pycache__/
 
 # Ignore test data folder
 .test/
+
+
+# ignore build files
+dist

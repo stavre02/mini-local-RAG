@@ -1,0 +1,22 @@
+services:
+  ollama_with_images:
+    build:
+      dockerfile: ./docker/Dockerfile.ollama
+    container_name: ollama_with_images
+    ports:
+      - "11434:11434"
+    networks:
+      - ollama_network
+
+  mini-local-rag:
+    build:
+      dockerfile: ./docker/Dockerfile.mini-local-rag
+    container_name: mini-local-rag
+    networks:
+      - ollama_network
+    depends_on:
+      - ollama_with_images
+
+networks:
+  ollama_network:
+    driver: bridge
