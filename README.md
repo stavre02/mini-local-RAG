@@ -314,9 +314,18 @@ graph TD;
 **Build a local mini RAG/Agentic Q&A over a small provided corpus (3 provided PDF files).**
 **Use Ollama with an offline embedding model**
 
+#### Basic agent loop
+
+plans → retrieves → drafts → cites
+
+#### Citations
+
+Include file name and document-traceable details in the response
+
 #### logs
 
-logs must have a format like:
+One structured log per query with steps taken (JSON or plain text). The format of
+the log entry is given below:
 
 ```json
 {
@@ -340,4 +349,7 @@ logs must have a format like:
 }
 ```
 
-and have 1 log per request
+#### Tests
+
+unit test coverage >75% with pytest. Tests should be as inclusive as possible and
+show evidence of edge case control and failure management
