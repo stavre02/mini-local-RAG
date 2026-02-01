@@ -45,7 +45,7 @@ class MarkdownChunkingStep(Step):
         for doc in chunks:
             doc.metadata['file_path'] = file_path
             doc.metadata['id']= str(uuid.uuid4())
-            doc.metadata['headers']= (doc.metadata.get("Header 1") or "" +" "+ doc.metadata.get("Header 2") or "")
+            doc.metadata['headers']=" ".join([doc.metadata.get("Header 1") or "", doc.metadata.get("Header 2") or ""])
             doc.metadata.pop("Header 1",None)
             doc.metadata.pop("Header 2",None)
 
