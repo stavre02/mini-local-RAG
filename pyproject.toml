@@ -24,6 +24,12 @@ dependencies = [
 [project.urls]
 Documentation = "https://github.com/stavre02/mini-local-rag#readme"
 
+[project.scripts]
+mini-local-rag = "mini_local_rag.cli:main"
+
+[tool.hatch.envs.build]
+python = "3.12" 
+
 [tool.hatch.version]
 path = "src/mini_local_rag/__about__.py"
 
