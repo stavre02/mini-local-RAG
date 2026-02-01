@@ -12,6 +12,17 @@ import pytest
 
 @pytest.fixture
 def pipelineBuilder():
+    """
+    Create a clean PipelineBuilder instance for end-to-end tests.
+
+    This fixture:
+    - Ensures test isolation by removing any existing test data
+    - Uses test-specific paths for vector store and retriever data
+    - Returns a fully configured PipelineBuilder ready for execution
+
+    Returns:
+        PipelineBuilder: A pipeline builder configured for test execution.
+    """
     cwd = Path().cwd()
     # Remove existing data
     try:
@@ -20,7 +31,22 @@ def pipelineBuilder():
         pass
     return PipelineBuilder(config=Config(retriever_path=".test/tf-idf-retriever",chromadb_path=".test/chroma_db"))
 
+
 def test_pipelines_e2e(pipelineBuilder:PipelineBuilder):
+    """
+    End-to-end test covering the full pipeline lifecycle.
+
+    This test validates:
+    1. Document ingestion
+    2. Vector store population
+    3. Question answering pipeline execution
+    4. Log record correctness
+    5. Document retrieval
+    6. Output generation
+    7. Document listing pipeline
+
+    The goal is to ensure all core pipelines work correctly.
+    """
     cwd = Path().cwd()
 
     full_path = os.path.join(cwd,"tests","test_doc","test_page.pdf")
