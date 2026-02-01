@@ -9,6 +9,7 @@
   - [hatch](#Using-hatch)
   - [Docker](#docker)
 - [Examples](#examples)
+- [Screenshots](#Screenshots)
 - [Tests](#Tests)
 - [Pipelines](#Pipelines)
   - [Ingestion flow](#ingestion-flow)
@@ -269,6 +270,30 @@ Or, using the historical control option:
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ```
+
+## Screenshots
+
+#### Ask question
+
+![Ask Screenshot](screenshots/ask.jpg)
+
+#### Ingest document
+
+![Ingest Screenshot](screenshots/ingest.jpg)
+
+#### list documents
+
+![List documents Screenshot](screenshots/list_documents.jpg)
+
+#### Error display
+
+![Error display Screenshot](screenshots/error.jpg)
+
+#### Logs
+
+**using --show-logs flag**
+
+![Show logs examples Screenshot](screenshots/show_logs.jpg)
 
 ## Tests
 
