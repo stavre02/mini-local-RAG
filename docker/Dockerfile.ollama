@@ -1,0 +1,16 @@
+FROM ollama/ollama
+
+
+COPY ./scripts/ollama_install.sh  /tmp/ollama_install.sh 
+
+
+WORKDIR /tmp
+ 
+RUN chmod +x ollama_install.sh 
+RUN ./ollama_install.sh
+
+RUN rm ./ollama_install.sh
+
+EXPOSE 11434
+
+ENTRYPOINT ["ollama", "serve"]

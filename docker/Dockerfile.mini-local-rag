@@ -1,0 +1,6 @@
+FROM python:3.12.12-slim
+
+
+WORKDIR /app
+
+RUN python3 -m pip install hatch
