@@ -6,7 +6,7 @@
 __pycache__/
 
 
-# Ignore data folder for now
+# Ignore .data folder / uncomment to ignore ingestion data
 .data/
 
 # Ignore test data folder

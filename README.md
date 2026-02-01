@@ -6,6 +6,8 @@
 
 - [How to run](#how-to-run)
   - [Dependencies](#dependencies)
+  - [hatch](#Using-hatch)
+  - [Docker](#docker)
 - [Examples](#examples)
 - [Tests](#Tests)
 - [Pipelines](#Pipelines)
@@ -37,6 +39,12 @@ python -m venv venv
 pip install hatch
 ```
 
+##### Interactive
+
+```console
+hatch run main -i / hatch run main --interactive
+```
+
 ##### Ask question
 
 ```console
@@ -53,6 +61,12 @@ hatch run main ingest "[full_path]"
 
 ```console
 hatch run main -h
+```
+
+### Docker
+
+```console
+placeholder
 ```
 
 ## Examples
