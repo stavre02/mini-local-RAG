@@ -77,7 +77,7 @@ or detached mode
 docker compose up -d ollama_with_images
 ```
 
-Wait to finish and then Run cli
+Wait to finish downloading the models and then run the cli
 
 ```console
 docker compose run it mini-local-rag
