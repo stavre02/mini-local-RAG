@@ -1,10 +1,11 @@
 import traceback
 from typing import Any, Dict, List, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class LogRecord(BaseModel):
+    model_config = ConfigDict(extra="allow")
     trace_id: str
     plan: List[str]
     latency: Dict[str, float]
@@ -25,7 +26,3 @@ class LogRecord(BaseModel):
             "stacktrace":stack_trace_string
         
         })
-
-    # Pydantic configuration to allow extra fields
-    class Config:
-        extra = "allow"  # Allow extra fields not defined in the model
