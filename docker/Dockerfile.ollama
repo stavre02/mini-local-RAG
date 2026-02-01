@@ -6,10 +6,20 @@ COPY ./scripts/ollama_install.sh  /tmp/ollama_install.sh
 
 WORKDIR /tmp
  
-RUN chmod +x ollama_install.sh 
-RUN ./ollama_install.sh
+RUN chmod +x ollama_start.sh 
+RUN ./ollama_start.sh
 
-RUN rm ./ollama_install.sh
+RUN rm ./ollama_start.sh
+
+
+RUN ollama pull qwen3-embedding:4b
+RUN ollama pull llama3.2:1b
+RUN ollama pull gemma3:4b
+
+RUN chmod +x ollama_stop.sh 
+RUN ./ollama_stop.sh
+
+RUN rm ./ollama_stop.sh
 
 EXPOSE 11434
 

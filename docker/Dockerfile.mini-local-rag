@@ -1,6 +1,34 @@
-FROM python:3.12.12-slim
+FROM python:3.12.12-slim AS builder
 
 
 WORKDIR /app
 
-RUN python3 -m pip install hatch
+RUN python3 -m pip install --no-cache-dir hatch
+
+COPY . .
+
+RUN hatch build
+
+FROM python:3.12.12-slim AS final
+
+WORKDIR /app
+
+
+COPY --from=builder /app/dist /app
+COPY ./documents /app/documents
+
+ENV OLLAMA_HOST=ollama:11434
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libxcb1 \
+    libx11-6 \
+    libxcomposite1 \
+    libxrandr2 \
+    libxrender1 \
+    libxi6 \
+    && rm -rf /var/lib/apt/lists/*
+
+
+RUN python3 -m pip install --no-cache-dir ./mini_local_rag-0.0.1.tar.gz
+
+ENTRYPOINT ["python3","-m","mini_local_rag","--interactive"]
