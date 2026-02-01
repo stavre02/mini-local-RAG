@@ -109,7 +109,11 @@ class AppContext:
         self.build_parser()
         args = self.parser.parse_args()
 
-        self.config = Config(enable_local_models =True)
+
+        # add this to true if ./data/models exists with docling models
+        # if false it will download them, I added it because of vpn issues when running locally
+        self.config = Config(enable_local_models =False)
+        
         if (args.interactive):
             self.interactive_mode()
         else:    
