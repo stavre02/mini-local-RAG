@@ -2,6 +2,8 @@ FROM ollama/ollama
 
 COPY ./scripts/ollama_run.sh /ollama_run.sh
 
+RUN chmod +x ollama_run.sh
+
 EXPOSE 11434
 
 ENTRYPOINT ["./ollama_run.sh"]
