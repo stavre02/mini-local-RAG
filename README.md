@@ -291,9 +291,15 @@ Or, using the historical control option:
 
 #### Logs
 
-**using --show-logs flag**
+All logs are saved in .data/logs file, using --show-logs will display the log also to stdout.
 
-![Show logs examples Screenshot](screenshots/show_logs.jpg)
+**Using --show-logs flag**
+
+![Show log example Screenshot](screenshots/show_logs.jpg)
+
+**Example display of error in logs**
+
+![Error log example Screenshot](screenshots/error_log.jpg)
 
 ## Tests
 
