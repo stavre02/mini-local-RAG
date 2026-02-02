@@ -11,7 +11,6 @@ from rich import print as rprint
 class AppContext:
     """Handles the context for the application, including argument parsing and interactive mode."""
 
-    parser:argparse.ArgumentParser
     config: Optional[Config]
     parser: Optional[argparse.ArgumentParser]
     builder: Optional[PipelineBuilder]
@@ -112,7 +111,7 @@ class AppContext:
 
         # add this to true if ./data/models exists with docling models
         # if false it will download them, I added it because of vpn issues when running locally
-        self.config = Config(enable_local_models =False)
+        self.config = Config(enable_local_models =True)
         
         if (args.interactive):
             self.interactive_mode()
