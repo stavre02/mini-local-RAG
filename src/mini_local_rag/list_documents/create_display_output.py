@@ -34,11 +34,16 @@ class CreateDisplayOutputStep(Step):
             context['output'] (Markdown): A Markdown formatted string containing a table of documents.
         """
         documents:list[Document] = context.get("documents",[])
-        markdown = "# Documents\n"
-        markdown += "| idx | Document | \n"
-        markdown += "|-----------|---------|\n"
-        for idx, doc in enumerate(documents):
-            markdown += f"| {1+idx} | {doc} |\n"
+        
+        markdown:list[str] = []
+        markdown.append("")
+        markdown.append("# Documents")
+        markdown.append("| idx | Document |")
+        markdown.append("|-----------|---------|")
 
-        markdown += "----\n"    
-        context["output"]=Markdown(markdown)
+        for idx, doc in enumerate(documents):
+            markdown.append( f"| {1+idx} | {doc} |")
+
+        markdown.append("----")
+        markdown.append("")
+        context["output"]=Markdown("\n".join(markdown))

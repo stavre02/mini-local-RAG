@@ -85,14 +85,16 @@ class DraftResponseStep(Step):
 
         record.draft_tokens = len(re.split(r"[\s,!?]+", draft_response))
 
-
+        markdown:list[str] = []
         # Table header
-        markdown = "\n"
-        markdown += "# Response \n"
-        markdown += draft_response
-        markdown += "\n\n"
-        markdown += "| Document | Section | \n"
-        markdown += "|-----------|---------|\n"
+        markdown.append("")
+        markdown.append("# Response")
+        markdown.append(draft_response)
+        markdown.append("")
+        markdown.append("")
+        markdown.append("| Document | Section |")
+        markdown.append("|-----------|---------|")
+
 
         # Table rows for each citation
         added_combinations = set()
@@ -100,12 +102,12 @@ class DraftResponseStep(Step):
         for doc in documents:
             file_path = doc.metadata['file_path']
             section = doc.metadata['headers']
-            entry = f"| {file_path} | {section} |\n"
+            entry = f"| {file_path} | {section} |"
             # ensure unique sections are displayed, we might have multiple chunks in one section so display once
             if entry not in added_combinations:
                 added_combinations.add(entry)
-                markdown += entry
+                markdown.append(entry)
 
-        markdown += "----\n" 
-        
-        context['output']=Markdown(markdown)
+        markdown.append("----")
+        markdown.append("")
+        context['output']=Markdown("\n".join(markdown))

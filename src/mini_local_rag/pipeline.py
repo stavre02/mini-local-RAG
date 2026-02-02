@@ -126,9 +126,19 @@ class Pipeline:
             if log_record is not None :
                 log_record.add_error(e=e)
             msg= str(e)
-            markdown = f"## There was an issue while processing your request.\n### message\n{msg}\n#### trace id\n{self.trace_id}\n***\n"
-            
-            rprint(Markdown(markdown))
+
+            markdown:list[str] = []
+
+            markdown.append("")
+            markdown.append("## There was an issue while processing your request.")
+            markdown.append("### message")
+            markdown.append(msg)
+            markdown.append("#### trace id")
+            markdown.append(self.trace_id)
+            markdown.append("----")
+            markdown.append("")
+
+            rprint(Markdown("\n".join(markdown)))
             
         ## check if there is an output object and we print it if its there
         output = self.context.get("output",None)
